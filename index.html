@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Wash&Go</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+
+    <!-- SEO (optionnel mais recommandé) -->
+    <meta name="description" content="Wash&Go - Nettoyage professionnel à domicile, rapide et efficace à Fuveau et ses alentours." />
+    <meta name="theme-color" content="#0F52BA" />
+    <meta name="robots" content="index, follow" />
+  </head>
+
+  <body class="bg-white text-gray-900">
+    <!-- 🔵 Point d’ancrage React -->
+    <div id="root"></div>
+
+    <!-- 🔵 Widget Facebook (fallback HTML visible même sans JS) -->
+    <div class="fb-page"
+      data-href="https://www.facebook.com/people/WashGO/61571447229404/"
+      data-tabs="timeline"
+      data-width=""
+      data-height="600"
+      data-small-header="false"
+      data-adapt-container-width="true"
+      data-hide-cover="false"
+      data-show-facepile="true">
+    </div>
+
+    <!-- 🔵 SnapWidget (si tu réactives Insta) -->
+    <script src="https://snapwidget.com/js/snapwidget.js" async></script>
+
+    <!-- 🔵 Facebook SDK -->
+    <div id="fb-root"></div>
+    <script async defer crossorigin="anonymous"
+      src="https://connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v17.0"
+    ></script>
+
+    <!-- 🔵 Vite injecte ton app React ici -->
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
