@@ -5,10 +5,11 @@ import * as yup from "yup";
 import { Plus, Send, RotateCw, X } from "lucide-react";
 
 interface ContactStepProps {
+  selectedTissu: string;
   selectedFormule: string;
   selectedOptions: string[];
   onSubmit: (data: FormData) => void;
-  allDemandes?: { formule: string; options: string[] }[];
+  allDemandes?: { tissu: string; formule: string; options: string[] }[];
   onAddCanape?: () => void;
   onFullReset?: () => void;
   onDeleteCanape?: (index: number) => void;
@@ -32,6 +33,7 @@ const schema = yup.object({
 });
 
 const ContactStep: React.FC<ContactStepProps> = ({
+  selectedTissu,
   selectedFormule,
   selectedOptions,
   onSubmit,
@@ -48,7 +50,10 @@ const ContactStep: React.FC<ContactStepProps> = ({
     resolver: yupResolver(schema),
   });
 
-  const fullDemandes = [...allDemandes, { formule: selectedFormule, options: selectedOptions }];
+  const fullDemandes = [
+    ...allDemandes,
+    { tissu: selectedTissu, formule: selectedFormule, options: selectedOptions },
+  ];
 
   const formulePrices: Record<string, number> = {
     "2 places": 40,
@@ -147,6 +152,9 @@ const ContactStep: React.FC<ContactStepProps> = ({
             {demandesWithTotal.map((demande, index) => (
               <li key={index} className="py-4 relative group">
                 <p className="font-semibold text-blue-600">Canapé {index + 1}</p>
+                <p>
+                  <span className="font-medium text-gray-800">Tissu :</span> {demande.tissu}
+                </p>
                 <p>
                   <span className="font-medium text-gray-800">Formule :</span> {demande.formule}
                 </p>

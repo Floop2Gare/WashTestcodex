@@ -2,14 +2,16 @@ import React, { useEffect, useRef, useState } from "react";
 
 interface VerticalProgressBarProps {
   activeStep: number;
+  selectedTissu?: string;
   selectedFormule?: string;
   selectedOptions?: string[];
 }
 
-const steps = ["Canapé", "Options", "Contact"];
+const steps = ["Tissu", "Places", "Options", "Contact"];
 
 const VerticalProgressBar: React.FC<VerticalProgressBarProps> = ({
   activeStep,
+  selectedTissu,
   selectedFormule,
   selectedOptions,
 }) => {
@@ -27,8 +29,10 @@ const VerticalProgressBar: React.FC<VerticalProgressBarProps> = ({
   const getStepValue = (index: number) => {
     switch (index) {
       case 0:
-        return selectedFormule || "";
+        return selectedTissu || "";
       case 1:
+        return selectedFormule || "";
+      case 2:
         return selectedOptions?.length ? selectedOptions.join(", ") : "";
       default:
         return "";

@@ -1,11 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import FormuleStep from "../components/CanapeTypeStep";
+import TissuStep from "../components/CanapeTissuStep";
 import OptionsStep from "../components/CanapeOptionsStep";
 import ContactStep from "../components/ContactStep";
 import VerticalProgressBar from "../components/VerticalProgressBar";
 import Navbar from "../../../components/Navbar/Navbar";
 
 export default function Canapes() {
+  const [selectedTissu, setSelectedTissu] = useState<string | undefined>();
   const [selectedFormule, setSelectedFormule] = useState<string | undefined>();
   const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
   const [demandes, setDemandes] = useState<any[]>([]);
@@ -21,18 +23,19 @@ export default function Canapes() {
   };
 
   const scrollToContact = () => {
-    if (!selectedFormule || selectedOptions.length === 0) {
+    if (!selectedTissu || !selectedFormule) {
       setFormError("Veuillez compléter chaque étape avant de poursuivre.");
       setShowErrorModal(true);
       return;
     }
     setFormError(null);
     setShowErrorModal(false);
-    scrollToNextSection(2);
+    scrollToNextSection(3);
   };
 
   const handleAddCanape = () => {
     const currentDemande = {
+      tissu: selectedTissu,
       formule: selectedFormule,
       options: selectedOptions,
     };
@@ -42,6 +45,7 @@ export default function Canapes() {
 
   const handleFinalSubmit = (contactData: any) => {
     const finalDemande = {
+      tissu: selectedTissu,
       formule: selectedFormule,
       options: selectedOptions,
     };
@@ -51,6 +55,7 @@ export default function Canapes() {
   };
 
   const resetFilters = () => {
+    setSelectedTissu(undefined);
     setSelectedFormule(undefined);
     setSelectedOptions([]);
     scrollToNextSection(0);
@@ -67,7 +72,7 @@ export default function Canapes() {
     resetFilters();
   };
 
-  const steps = ["Type de Canapé", "Options", "Contact"];
+  const steps = ["Type de tissu", "Places", "Options", "Contact"];
 
   // useEffect supprimé ici (il causait un freeze lors de la navigation)
 
@@ -78,6 +83,7 @@ export default function Canapes() {
       <div className="min-h-screen bg-gradient-to-b from-white to-gray-50">
         <VerticalProgressBar
           activeStep={activeSection}
+          selectedTissu={selectedTissu}
           selectedFormule={selectedFormule}
           selectedOptions={selectedOptions}
         />
@@ -121,12 +127,20 @@ export default function Canapes() {
 
         {/* Formulaires */}
         <div className="max-w-7xl mx-auto px-4 py-12 space-y-24">
-          {[<FormuleStep
-              key="type"
+          {[<TissuStep
+              key="tissu"
+              selected={selectedTissu}
+              onSelect={(t) => {
+                setSelectedTissu(t);
+                scrollToNextSection(1);
+              }}
+            />,
+            <FormuleStep
+              key="places"
               selected={selectedFormule}
               onSelect={(formule) => {
                 setSelectedFormule(formule);
-                scrollToNextSection(1);
+                scrollToNextSection(2);
               }}
             />,
             <OptionsStep
@@ -145,6 +159,7 @@ export default function Canapes() {
             />,
             <ContactStep
               key="contact"
+              selectedTissu={selectedTissu || ""}
               selectedFormule={selectedFormule || ""}
               selectedOptions={selectedOptions}
               onSubmit={handleFinalSubmit}
