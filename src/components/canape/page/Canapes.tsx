@@ -5,10 +5,16 @@ import ContactStep from "../components/ContactStep";
 import VerticalProgressBar from "../components/VerticalProgressBar";
 import Navbar from "../../../components/Navbar/Navbar";
 
+type CanapeDemande = {
+  tissu: string;
+  formule: string;
+  options: string[];
+};
+
 export default function Canapes() {
   const [selectedFormule, setSelectedFormule] = useState<string | undefined>();
   const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
-  const [demandes, setDemandes] = useState<any[]>([]);
+  const [demandes, setDemandes] = useState<CanapeDemande[]>([]);
   const [activeSection, setActiveSection] = useState<number>(0);
   const [formError, setFormError] = useState<string | null>(null);
   const [showErrorModal, setShowErrorModal] = useState(false);
@@ -32,8 +38,9 @@ export default function Canapes() {
   };
 
   const handleAddCanape = () => {
-    const currentDemande = {
-      formule: selectedFormule,
+    const currentDemande: CanapeDemande = {
+      tissu: "",
+      formule: selectedFormule as string,
       options: selectedOptions,
     };
     setDemandes((prev) => [...prev, currentDemande]);
@@ -41,11 +48,12 @@ export default function Canapes() {
   };
 
   const handleFinalSubmit = (contactData: any) => {
-    const finalDemande = {
-      formule: selectedFormule,
+    const finalDemande: CanapeDemande = {
+      tissu: "",
+      formule: selectedFormule as string,
       options: selectedOptions,
     };
-    const toutesDemandes = [...demandes, finalDemande];
+    const toutesDemandes: CanapeDemande[] = [...demandes, finalDemande];
     console.log("Demandes Canapé :", toutesDemandes);
     console.log("Contact :", contactData);
   };
@@ -57,7 +65,7 @@ export default function Canapes() {
   };
 
   const handleDeleteCanape = (index: number) => {
-    const updated = [...demandes];
+    const updated: CanapeDemande[] = [...demandes];
     updated.splice(index, 1);
     setDemandes(updated);
   };
