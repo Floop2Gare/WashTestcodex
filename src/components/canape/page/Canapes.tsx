@@ -50,8 +50,10 @@ export default function Canapes() {
       options: selectedOptions,
     };
     const toutesDemandes = [...demandes, finalDemande];
-    console.log("Demandes Canapé :", toutesDemandes);
-    console.log("Contact :", contactData);
+
+    // TODO: implement submission logic
+    void contactData;
+    void toutesDemandes;
   };
 
   const resetFilters = () => {
